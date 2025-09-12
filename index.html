@@ -21,18 +21,17 @@
 
     header{max-width:var(--maxw);margin:28px auto 0;padding:0 16px 8px; text-align:center}
     .brand{display:flex;flex-direction:column;align-items:center;gap:12px}
-    .brand img{width:clamp(140px, 28vw, 260px)}
-    @media (max-width:720px){ .brand img{ width:clamp(120px, 42vw, 200px) } }
+    .brand img{width:clamp(160px, 28vw, 300px)}
+    @media (max-width:720px){ .brand img{ width:clamp(140px, 42vw, 240px) } }
 
-    /* H1 menor e centralizado */
+    /* H1 menor e elegante, centralizado */
     .brand h1{
       font-family:"Playfair Display", serif;
       font-weight:600;
-      font-size: clamp(16px, 2vw, 24px);
+      font-size: clamp(16px, 2vw, 22px);
       line-height:1.15; letter-spacing:.2px; color:var(--rose-prim);
-      margin:6px 0 0; text-align:center; white-space:nowrap;
+      margin:6px 0 0; text-align:center;
     }
-    @media (max-width:420px){ .brand h1{ white-space:normal; } }
 
     .brand p{margin-top:8px; color:#7a5e59; font-size:clamp(12px, 2vw, 14px); max-width:720px; text-align:center;}
 
@@ -60,6 +59,8 @@
 
     .btn-cta{--h:56px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--h);padding:0 28px;border:0;border-radius:999px;cursor:pointer;font-weight:800;font-size:17px;color:#fff;background:linear-gradient(135deg,#B65F56 0%,#E6A3A3 100%);box-shadow:0 12px 28px rgba(182,95,86,.25)}
     @media (max-width:720px){ .btn-cta{width:100%} }
+
+    /* estados “desligado” dos campos condicionais de saúde */
     .detail.off{opacity:.6}.detail.off input{background:#f8f5f0}
   </style>
 </head>
@@ -247,7 +248,7 @@
     </form>
   </main>
 
-  <footer style="text-align:center; margin:40px 0; font-size:12px; color:#7a5e59; line-height:1.6%;">
+  <footer style="text-align:center; margin:40px 0; font-size:12px; color:#7a5e59; line-height:1.6;">
     © 2025 Dra. Natália Magalhães – Todos os direitos reservados.<br>
     <span style="background:linear-gradient(135deg,#B65F56 0%,#E6A3A3 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;">
       Desenvolvido por Noelle Ventura
@@ -255,16 +256,17 @@
   </footer>
 
   <script>
+    // >>> ajuste aqui se o Apps Script mudar <<<
     const EXEC_URL = 'https://script.google.com/macros/s/AKfycbwqQ7Z5HIyd5htdmTkSP45cJr-eBx7ysQV1t4GkQluTBN25yX3a3ewHckb_8gUQ1k93/exec';
     const SECRET   = 'nm_2025_24jun86_bynv';
 
     const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
     const getRadio=(name)=>(document.querySelector(`input[name="${name}"]:checked`)||{}).value||'';
 
-    // Mostrar/ocultar “quais?” do histórico
+    // Histórico: mostra "Quais?" quando marcou Sim
     function toggleHist(){ document.getElementById('wrap-quais-fez').classList.toggle('hidden', getRadio('jaFez')!=='S'); }
 
-    // Saúde: campos dependentes (obrigatórios quando “Sim”)
+    // Saúde: campos condicionais obrigatórios apenas quando "Sim"
     const saudeDeps = [
       { name:'alergiaMedicamentos', wrap:'wrap-alergia-meds',  input:'input[name="quaisAlergiaMedicamentos"]' },
       { name:'alergiasGerais',      wrap:'wrap-alergias',      input:'input[name="quaisAlergias"]' },
@@ -320,7 +322,7 @@
       $$('input[type="text"]:not([disabled]),input[type="email"]:not([disabled]),input[type="tel"]:not([disabled]),input[type="date"]:not([disabled]),input[type="hidden"]:not([disabled]),textarea:not([disabled]),select:not([disabled])',formEl)
         .forEach(el=>data[el.name]=el.value.trim());
       ['jaFez','jaPaciente','usaMedicamentos','alergiaMedicamentos','alergiasGerais','gestante','anabolizantes','cirurgiaRecente','tabagismo','alcool','atividadeFisica']
-        .forEach(n=>data[n]=(document.querySelector(`input[name="${n}"]:checked`)||{}).value||'');
+        .forEach(n=>data[n]=(document.querySelector(`input[name="${n}"]:checked`)||{}).value||''));
       data['doencas']=$$('input[name="doencas"]:checked').map(el=>el.value);
       data['lgpd']=document.querySelector('input[name="lgpd"]').checked;
       return data;
