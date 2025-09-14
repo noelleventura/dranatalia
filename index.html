@@ -24,7 +24,6 @@
     .brand img{width:clamp(160px, 28vw, 300px)}
     @media (max-width:720px){ .brand img{ width:clamp(140px, 42vw, 240px) } }
 
-    /* H1 menor e elegante, centralizado */
     .brand h1{
       font-family:"Playfair Display", serif;
       font-weight:600;
@@ -32,7 +31,6 @@
       line-height:1.15; letter-spacing:.2px; color:var(--rose-prim);
       margin:6px 0 0; text-align:center;
     }
-
     .brand p{margin-top:8px; color:#7a5e59; font-size:clamp(12px, 2vw, 14px); max-width:720px; text-align:center;}
 
     main{max-width:var(--maxw);margin:18px auto 50px;padding:0 16px}
@@ -53,15 +51,13 @@
     .chip{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--border);border-radius:999px;background:#fff}
     .chip input{accent-color:var(--rose-prim)}
     .hidden{display:none}
+    .off{opacity:.6}
     .actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
     .required::after{content:" *";color:#b45309}
     .success{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:16px;border-radius:12px;margin-top:12px;text-align:center}
 
     .btn-cta{--h:56px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--h);padding:0 28px;border:0;border-radius:999px;cursor:pointer;font-weight:800;font-size:17px;color:#fff;background:linear-gradient(135deg,#B65F56 0%,#E6A3A3 100%);box-shadow:0 12px 28px rgba(182,95,86,.25)}
     @media (max-width:720px){ .btn-cta{width:100%} }
-
-    /* estados “desligado” dos campos condicionais de saúde */
-    .detail.off{opacity:.6}.detail.off input{background:#f8f5f0}
   </style>
 </head>
 <body>
@@ -88,8 +84,52 @@
           <div>
             <label class="required">Objetivo principal com o tratamento</label>
             <select name="objetivo" required>
-              <option value="">Selecione…</option><option>Harmonização facial</option><option>Flacidez/pele</option><option>Olheiras</option><option>Contorno/volume</option><option>Rejuvenescer geral</option><option>Outro</option>
+              <option value="">Selecione…</option>
+              <option>Harmonização facial</option><option>Flacidez/pele</option>
+              <option>Contorno/volume</option><option>Rejuvenescer geral</option>
+              <option>Outro</option>
             </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERESSE & INVESTIMENTO -->
+      <div class="card">
+        <div class="section-title">Interesse & Investimento</div>
+
+        <label>Quais procedimentos da Estética Regenerativa despertam seu interesse? <span style="font-weight:400;color:#7a5e59">(selecione quantos quiser)</span></label>
+        <div class="inline" style="margin-bottom:14px">
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Botox"> Botox</label>
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Bioreconexão"> Bioreconexão</label>
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Ultraformer"> Ultraformer</label>
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Reset"> Reset</label>
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Exocoll"> Exocoll</label>
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Protocoll"> Protocoll</label>
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Bioestimulador de colágeno"> Bioestimulador de colágeno</label>
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Preenchimento labial"> Preenchimento labial</label>
+          <label class="chip"><input type="checkbox" name="procInteresse" value="Outros"> Outros…</label>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Valores de referência (estimativa inicial)</label>
+            <div style="border:1px solid var(--border);border-radius:14px;padding:12px; font-size:14px; color:#5d3c38">
+              • Bioestimulador (1 seringa): <strong>R$ 2.600</strong> | (2 seringas): <strong>R$ 3.800</strong><br>
+              • Bioreconexão: <strong>R$ 5.900</strong> &nbsp;• Ultraformer (face): <strong>R$ 2.080</strong><br>
+              • Protocoll: <strong>R$ 3.200</strong> &nbsp;• Reset: <strong>R$ 3.800</strong><br>
+              • Alive: <strong>a partir de R$ 1.200</strong> &nbsp;• Preenchimento labial: <strong>a partir de R$ 1.200</strong><br>
+              <span style="font-size:12px;color:#7a5e59">Valores sujeitos à avaliação clínica e plano personalizado.</span>
+            </div>
+          </div>
+          <div>
+            <label class="required">Qual faixa de investimento você considera neste momento?</label>
+            <div class="inline">
+              <label class="chip"><input type="radio" name="faixaInvest" value="Até 2.000" required> Até R$ 2.000</label>
+              <label class="chip"><input type="radio" name="faixaInvest" value="2.000–3.500"> R$ 2.000–3.500</label>
+              <label class="chip"><input type="radio" name="faixaInvest" value="3.500–6.000"> R$ 3.500–6.000</label>
+              <label class="chip"><input type="radio" name="faixaInvest" value="Acima de 6.000"> Acima de R$ 6.000</label>
+              <label class="chip"><input type="radio" name="faixaInvest" value="Quero avaliar com a Dra."> Quero avaliar com a Dra.</label>
+            </div>
           </div>
         </div>
       </div>
@@ -105,7 +145,7 @@
               <label class="chip"><input type="radio" name="jaFez" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-quais-fez" class="hidden">
+          <div id="wrap-quais-fez" class="hidden off">
             <label>Quais?</label>
             <input type="text" name="quaisFez" placeholder="Ex.: toxina, preenchedor, bioestimulador…">
           </div>
@@ -131,7 +171,7 @@
               <label class="chip"><input type="radio" name="alergiaMedicamentos" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-alergia-meds" class="detail off"><label>Quais medicamentos (alergia)?</label><input type="text" name="quaisAlergiaMedicamentos" aria-disabled="true" disabled></div>
+          <div id="wrap-alergia-meds" class="hidden off"><label>Quais medicamentos (alergia)?</label><input type="text" name="quaisAlergiaMedicamentos" disabled></div>
 
           <div>
             <label class="required">Possui outras alergias?</label>
@@ -140,7 +180,7 @@
               <label class="chip"><input type="radio" name="alergiasGerais" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-alergias" class="detail off"><label>Quais alergias?</label><input type="text" name="quaisAlergias" aria-disabled="true" disabled></div>
+          <div id="wrap-alergias" class="hidden off"><label>Quais alergias?</label><input type="text" name="quaisAlergias" disabled></div>
 
           <div>
             <label class="required">Usa medicamentos?</label>
@@ -149,7 +189,7 @@
               <label class="chip"><input type="radio" name="usaMedicamentos" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-usa-meds" class="detail off"><label>Quais medicamentos?</label><input type="text" name="quaisMedicamentos" aria-disabled="true" disabled></div>
+          <div id="wrap-usa-meds" class="hidden off"><label>Quais medicamentos?</label><input type="text" name="quaisMedicamentos" disabled></div>
 
           <div>
             <label class="required">Doenças/pré-existências</label>
@@ -177,7 +217,7 @@
               <label class="chip"><input type="radio" name="anabolizantes" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-anabolizantes" class="detail off"><label>Quais (anabolizantes)?</label><input type="text" name="quaisAnabolizantes" aria-disabled="true" disabled></div>
+          <div id="wrap-anabolizantes" class="hidden off"><label>Quais (anabolizantes)?</label><input type="text" name="quaisAnabolizantes" disabled></div>
 
           <div>
             <label class="required">Cirurgias recentes (últimos 12 meses)?</label>
@@ -186,7 +226,7 @@
               <label class="chip"><input type="radio" name="cirurgiaRecente" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-cirurgias" class="detail off"><label>Quais cirurgias?</label><input type="text" name="quaisCirurgias" aria-disabled="true" disabled></div>
+          <div id="wrap-cirurgias" class="hidden off"><label>Quais cirurgias?</label><input type="text" name="quaisCirurgias" disabled></div>
         </div>
 
         <div class="row">
@@ -197,7 +237,7 @@
               <label class="chip"><input type="radio" name="tabagismo" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-tabagismo" class="detail off"><label>Tabagismo – detalhes</label><input type="text" name="tabagismoDetalhes" aria-disabled="true" disabled></div>
+          <div id="wrap-tabagismo" class="hidden off"><label>Tabagismo – detalhes</label><input type="text" name="tabagismoDetalhes" disabled></div>
 
           <div>
             <label class="required">Álcool</label>
@@ -206,7 +246,7 @@
               <label class="chip"><input type="radio" name="alcool" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-alcool" class="detail off"><label>Álcool – frequência/quantidade</label><input type="text" name="alcoolDetalhes" placeholder="Ex.: 1–2x/semana; 2 doses/vez" aria-disabled="true" disabled></div>
+          <div id="wrap-alcool" class="hidden off"><label>Álcool – frequência/quantidade</label><input type="text" name="alcoolDetalhes" placeholder="Ex.: 1–2x/semana; 2 doses/vez" disabled></div>
 
           <div>
             <label class="required">Atividade física</label>
@@ -215,7 +255,7 @@
               <label class="chip"><input type="radio" name="atividadeFisica" value="S"> Sim</label>
             </div>
           </div>
-          <div id="wrap-atividade" class="detail off"><label>Atividade física – tipo/frequência</label><input type="text" name="atividadeFisicaDetalhes" placeholder="Ex.: musculação 3x/semana, 45min" aria-disabled="true" disabled></div>
+          <div id="wrap-atividade" class="hidden off"><label>Atividade física – tipo/frequência</label><input type="text" name="atividadeFisicaDetalhes" placeholder="Ex.: musculação 3x/semana, 45min" disabled></div>
         </div>
       </div>
 
@@ -264,7 +304,16 @@
     const getRadio=(name)=>(document.querySelector(`input[name="${name}"]:checked`)||{}).value||'';
 
     // Histórico: mostra "Quais?" quando marcou Sim
-    function toggleHist(){ document.getElementById('wrap-quais-fez').classList.toggle('hidden', getRadio('jaFez')!=='S'); }
+    function toggleHist(){
+      const on = getRadio('jaFez')==='S';
+      const wrap = document.getElementById('wrap-quais-fez');
+      wrap.classList.toggle('hidden', !on);
+      wrap.classList.toggle('off', !on);
+      const input = document.querySelector('input[name="quaisFez"]');
+      input.disabled = !on; input.required = on;
+      const lbl = wrap.querySelector('label'); if (lbl) lbl.classList.toggle('required', on);
+      if(!on) input.value='';
+    }
 
     // Saúde: campos condicionais obrigatórios apenas quando "Sim"
     const saudeDeps = [
@@ -283,15 +332,20 @@
         const wrap  = document.getElementById(d.wrap);
         const input = document.querySelector(d.input);
         const on = byYes(d.name);
-        input.disabled = !on; input.required = on; wrap.classList.toggle('off', !on);
+        input.disabled = !on; input.required = on;
+        wrap.classList.toggle('hidden', !on);
+        wrap.classList.toggle('off', !on);
         const lbl = wrap.querySelector('label'); if (lbl) lbl.classList.toggle('required', on);
         if (!on) input.value='';
       });
     }
+
+    // eventos
     document.addEventListener('change', e=>{
       if (['jaFez'].includes(e.target.name)) toggleHist();
       if (['alergiaMedicamentos','alergiasGerais','usaMedicamentos','anabolizantes','cirurgiaRecente','tabagismo','alcool','atividadeFisica'].includes(e.target.name)) toggleSaude();
     });
+    // estado inicial
     toggleHist(); toggleSaude();
 
     // UTM & tech
@@ -322,14 +376,18 @@
       $$('input[type="text"]:not([disabled]),input[type="email"]:not([disabled]),input[type="tel"]:not([disabled]),input[type="date"]:not([disabled]),input[type="hidden"]:not([disabled]),textarea:not([disabled]),select:not([disabled])',formEl)
         .forEach(el=>data[el.name]=el.value.trim());
       ['jaFez','jaPaciente','usaMedicamentos','alergiaMedicamentos','alergiasGerais','gestante','anabolizantes','cirurgiaRecente','tabagismo','alcool','atividadeFisica']
-        .forEach(n=>data[n]=(document.querySelector(`input[name="${n}"]:checked`)||{}).value||''));
+        .forEach(n=> data[n]=(document.querySelector(`input[name="${n}"]:checked`)||{}).value || '' );
       data['doencas']=$$('input[name="doencas"]:checked').map(el=>el.value);
+      data['procInteresse']=$$('input[name="procInteresse"]:checked').map(el=>el.value);
       data['lgpd']=document.querySelector('input[name="lgpd"]').checked;
       return data;
     }
     function validate(formEl){
       const req=formEl.querySelectorAll('[required]');
-      for(const r of req){ if(r.type==='checkbox' && !r.checked) return false; if(r.value.trim()==='') return false; }
+      for(const r of req){
+        if(r.type==='checkbox' && !r.checked) return false;
+        if(r.type!=='checkbox' && r.value.trim()==='') return false;
+      }
       if (formEl.querySelector('input[name="_hp"]').value) return false; // honeypot
       return true;
     }
@@ -337,7 +395,12 @@
     const form=document.getElementById('form'); const feedback=document.getElementById('feedback');
     form.addEventListener('submit',async e=>{
       e.preventDefault();
-      if(!validate(form)){feedback.classList.remove('hidden');feedback.textContent='Preencha os obrigatórios e confirme a LGPD.';feedback.scrollIntoView({behavior:'smooth'});return;}
+      if(!validate(form)){
+        feedback.classList.remove('hidden');
+        feedback.textContent='Preencha os obrigatórios e confirme a LGPD.';
+        feedback.scrollIntoView({behavior:'smooth'});
+        return;
+      }
       const payload=collect(form);
       const body = new URLSearchParams({ secret: SECRET, payload: JSON.stringify(payload) });
 
