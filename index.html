@@ -10,7 +10,6 @@
 
   <style>
     :root{
-      /* cores alinhadas ao manual */
       --rose-prim:#B65F56; --rose-apoio:#E6A3A3; --creme:#FCF5EB;
       --border:#e6e0d7; --txt:#2b2b2b; --muted:#7a5e59;
       --radius:18px; --shadow:0 14px 40px rgba(0,0,0,.06);
@@ -48,8 +47,6 @@
       width:100%; padding:14px; min-height:44px; border:1px solid var(--border); border-radius:14px; background:#fff; outline:none; font-size:16px
     }
     textarea{min-height:120px; resize:vertical}
-    .help{font-size:12px; color:#8b6c67; margin-top:4px}
-
     .inline{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
     .chip{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--border);border-radius:999px;background:#fff}
     .chip input{accent-color:var(--rose-prim)}
@@ -58,10 +55,17 @@
     .success{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:16px;border-radius:12px;margin-top:12px;text-align:center}
     .actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 
-    /* estados “desligado” — visível porém desabilitado */
+    /* Saúde – visível, mas desabilita quando “Não” */
     .detail.off{opacity:.6}
     .detail.off input{background:#f8f5f0}
 
+    /* Queixa & Interesses — grid limpo */
+    .qei-grid{display:grid;grid-template-columns: 1.1fr .9fr;gap:24px;align-items:start}
+    @media (max-width:900px){ .qei-grid{ grid-template-columns:1fr } }
+    .qei-right{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff}
+    .qei-right .block + .block{ margin-top:16px }
+    .chips-wrap{display:flex;flex-wrap:wrap;gap:10px}
+    .tight{margin-bottom:8px}
     .btn-cta{--h:56px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--h);padding:0 28px;border:0;border-radius:999px;cursor:pointer;font-weight:800;font-size:17px;color:#fff;background:linear-gradient(135deg,#B65F56 0%,#E6A3A3 100%);box-shadow:0 12px 28px rgba(182,95,86,.25)}
     @media (max-width:720px){ .btn-cta{width:100%} }
   </style>
@@ -97,36 +101,55 @@
       <div class="card">
         <div class="section-title">Queixa & Interesses (Estética Regenerativa)</div>
 
-        <!-- 1) Campo aberto (queixa principal) -->
-        <label class="required">O que mais te incomoda hoje ou o que você gostaria de melhorar?</label>
-        <textarea name="queixa" placeholder="Ex.: flacidez no terço inferior do rosto; perda de definição no contorno mandibular; linhas na testa; desejo de rejuvenescer mantendo naturalidade." required></textarea>
-        <div class="help">Quanto mais específico(a) você puder ser, melhor conseguiremos preparar sua avaliação (ex.: “flacidez”, “rugas dinâmicas na testa”, “perda de volume malar”).</div>
-        <br>
-
-        <!-- 2) Seleção de interesse (procedimentos) -->
-        <label>Quais procedimentos te interessam? <span class="help">(selecione quantos quiser)</span></label>
-        <div class="inline" style="margin-bottom:14px">
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Botox"> Botox</label>
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Bioreconexão"> Bioreconexão</label>
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Ultraformer"> Ultraformer</label>
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Reset"> Reset</label>
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Exocoll"> Exocoll</label>
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Protocoll"> Protocoll</label>
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Bioestimulador de colágeno"> Bioestimulador de colágeno</label>
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Preenchimento labial"> Preenchimento labial</label>
-          <label class="chip"><input type="checkbox" name="procInteresse" value="Outros"> Outros…</label>
+        <!-- pequeno seletor para guiar o placeholder -->
+        <div class="row" style="margin-bottom:10px">
+          <div>
+            <label class="required">Objetivo principal com o tratamento</label>
+            <select name="objetivo" id="objetivo" required>
+              <option value="">Selecione…</option>
+              <option value="flacidez">Flacidez/pele</option>
+              <option value="contorno">Contorno/volume</option>
+              <option value="rejuvenescer">Rejuvenescer geral</option>
+              <option value="harmonia">Harmonização facial</option>
+              <option value="prevencao">Prevenção</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
         </div>
 
-        <!-- 3) Faixa de investimento -->
-        <div class="row">
+        <div class="qei-grid">
+          <!-- ESQUERDA: QUEIXA -->
           <div>
-            <label class="required">Qual faixa de investimento você considera neste momento?</label>
-            <div class="inline">
-              <label class="chip"><input type="radio" name="faixaInvest" value="Até 2.000" required> Até R$ 2.000</label>
-              <label class="chip"><input type="radio" name="faixaInvest" value="2.000–3.500"> R$ 2.000–3.500</label>
-              <label class="chip"><input type="radio" name="faixaInvest" value="3.500–6.000"> R$ 3.500–6.000</label>
-              <label class="chip"><input type="radio" name="faixaInvest" value="Acima de 6.000"> Acima de R$ 6.000</label>
-              <label class="chip"><input type="radio" name="faixaInvest" value="Quero avaliar com a Dra."> Quero avaliar com a Dra.</label>
+            <label class="required">O que mais te incomoda hoje ou o que você gostaria de melhorar?</label>
+            <textarea name="queixa" id="queixa" placeholder="Descreva brevemente sua principal queixa…" required></textarea>
+          </div>
+
+          <!-- DIREITA: INTERESSES + INVESTIMENTO -->
+          <div class="qei-right">
+            <div class="block">
+              <label class="tight">Quais procedimentos te interessam?</label>
+              <div class="chips-wrap" id="chipsInteresse">
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Botox"> Botox</label>
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Bioreconexão"> Bioreconexão</label>
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Ultraformer"> Ultraformer</label>
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Reset"> Reset</label>
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Exocoll"> Exocoll</label>
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Protocoll"> Protocoll</label>
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Bioestimulador de colágeno"> Bioestimulador de colágeno</label>
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Preenchimento labial"> Preenchimento labial</label>
+                <label class="chip"><input type="checkbox" name="procInteresse" value="Outros"> Outros…</label>
+              </div>
+            </div>
+
+            <div class="block">
+              <label class="tight">Qual faixa de investimento você considera neste momento?</label>
+              <div class="chips-wrap" id="wrapInvest">
+                <label class="chip"><input type="radio" name="faixaInvest" value="Até 2.000"> Até R$ 2.000</label>
+                <label class="chip"><input type="radio" name="faixaInvest" value="2.000–3.500"> R$ 2.000–3.500</label>
+                <label class="chip"><input type="radio" name="faixaInvest" value="3.500–6.000"> R$ 3.500–6.000</label>
+                <label class="chip"><input type="radio" name="faixaInvest" value="Acima de 6.000"> Acima de R$ 6.000</label>
+                <label class="chip"><input type="radio" name="faixaInvest" value="Quero avaliar com a Dra."> Quero avaliar com a Dra.</label>
+              </div>
             </div>
           </div>
         </div>
@@ -143,10 +166,10 @@
               <label class="chip"><input type="radio" name="jaFez" value="S"> Sim</label>
             </div>
           </div>
-          <!-- visível sempre; desabilita quando “Não” -->
-          <div id="wrap-quais-fez" class="detail off">
+          <!-- aparece só quando “Sim” -->
+          <div id="wrap-quais-fez" class="hidden">
             <label>Quais?</label>
-            <input type="text" name="quaisFez" aria-disabled="true" disabled placeholder="Ex.: toxina, preenchedor, bioestimulador…">
+            <input type="text" name="quaisFez" placeholder="Ex.: toxina, preenchedor, bioestimulador…">
           </div>
 
           <div>
@@ -159,7 +182,7 @@
         </div>
       </div>
 
-      <!-- SAÚDE -->
+      <!-- SAÚDE (visível; desabilita quando “Não”) -->
       <div class="card">
         <div class="section-title">Saúde</div>
         <div class="row">
@@ -261,7 +284,7 @@
       <!-- FOTOS -->
       <div class="card">
         <div class="section-title">Fotos para Avaliação</div>
-        <p class="help">Envie 3 fotos: Frente, Perfil esquerdo e Perfil direito (luz natural, fundo neutro).</p>
+        <p class="muted">Envie 3 fotos: Frente, Perfil esquerdo e Perfil direito (luz natural, fundo neutro).</p>
         <div class="row-3">
           <div><label>Frente</label><input type="file" id="selfieFront" accept="image/*" capture="user"><img id="previewFront" class="hidden" style="width:100%;max-width:260px;border:1px solid var(--border);border-radius:12px" alt="Prévia frente"><input type="hidden" name="selfieFrontDataURL"></div>
           <div><label>Perfil esquerdo</label><input type="file" id="selfieLeft" accept="image/*" capture="user"><img id="previewLeft" class="hidden" style="width:100%;max-width:260px;border:1px solid var(--border);border-radius:12px" alt="Prévia perfil esquerdo"><input type="hidden" name="selfieLeftDataURL"></div>
@@ -295,22 +318,50 @@
   </footer>
 
   <script>
-    // >>> Apps Script endpoint/secret (ajuste se mudar) <<<
+    // >>> ajuste aqui se o Apps Script mudar <<<
     const EXEC_URL = 'https://script.google.com/macros/s/AKfycbwqQ7Z5HIyd5htdmTkSP45cJr-eBx7ysQV1t4GkQluTBN25yX3a3ewHckb_8gUQ1k93/exec';
     const SECRET   = 'nm_2025_24jun86_bynv';
 
     const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
     const getRadio=(name)=>(document.querySelector(`input[name="${name}"]:checked`)||{}).value||'';
 
-    // Histórico estético: visível sempre; desabilita quando “Não”
+    // Placeholders dinâmicos para "queixa"
+    const PLACEHOLDERS = {
+      flacidez: "Ex.: flacidez no terço inferior; perda de firmeza; queda do contorno mandibular…",
+      contorno: "Ex.: perda de volume malar; pouca definição de mandíbula/queixo; lábios com pouco volume…",
+      rejuvenescer: "Ex.: rugas na testa/pés-de-galinha; textura cansada; desejo de rejuvenescer mantendo naturalidade…",
+      harmonia: "Ex.: assimetrias leves; desejo de equilíbrio dos traços; melhorar proporcionalidade do rosto…",
+      prevencao: "Ex.: começar cuidado preventivo; manter qualidade da pele; evitar avanço de linhas…",
+      outro: "Descreva brevemente sua principal queixa…"
+    };
+
+    function updateQueixaPlaceholder(){
+      const objetivo = (document.getElementById('objetivo')||{}).value || '';
+      const queixa = document.getElementById('queixa');
+      // se objetivo não escolhido, inferir pelo primeiro procedimento marcado
+      if(!objetivo){
+        const firstChecked = document.querySelector('input[name="procInteresse"]:checked');
+        if(firstChecked){
+          const val = firstChecked.value.toLowerCase();
+          if(val.includes('ultraformer') || val.includes('bioestimulador')) queixa.placeholder = PLACEHOLDERS['flacidez'];
+          else if(val.includes('preenchimento') || val.includes('labial')) queixa.placeholder = PLACEHOLDERS['contorno'];
+          else if(val.includes('botox') || val.includes('reset') || val.includes('exocoll') || val.includes('protocoll')) queixa.placeholder = PLACEHOLDERS['rejuvenescer'];
+          else queixa.placeholder = PLACEHOLDERS['outro'];
+          return;
+        }
+      }
+      queixa.placeholder = PLACEHOLDERS[objetivo||'outro'];
+    }
+
+    // Histórico estético: “Quais?” só quando “Sim”
     function toggleHist(){
       const on = getRadio('jaFez')==='S';
       const wrap = document.getElementById('wrap-quais-fez');
+      wrap.classList.toggle('hidden', !on);
       const input = document.querySelector('input[name="quaisFez"]');
       input.disabled = !on;
-      wrap.classList.toggle('off', !on);
+      if(!on) input.value='';
       const lbl = wrap.querySelector('label'); if (lbl) lbl.classList.toggle('required', on);
-      if (!on) input.value='';
     }
 
     // Saúde: visível sempre; desabilita quando “Não”
@@ -337,13 +388,15 @@
       });
     }
 
-    // eventos
+    // eventos dinâmicos
     document.addEventListener('change', e=>{
       if (e.target && e.target.name==='jaFez') toggleHist();
       if (['alergiaMedicamentos','alergiasGerais','usaMedicamentos','anabolizantes','cirurgiaRecente','tabagismo','alcool','atividadeFisica'].includes(e.target.name)) toggleSaude();
+      if (e.target && (e.target.id==='objetivo' || e.target.name==='procInteresse')) updateQueixaPlaceholder();
     });
+
     // estado inicial
-    toggleHist(); toggleSaude();
+    toggleHist(); toggleSaude(); updateQueixaPlaceholder();
 
     // UTM & tech
     const params=new URLSearchParams(location.search);
@@ -377,7 +430,11 @@
         .forEach(n=> data[n]=(document.querySelector(`input[name="${n}"]:checked`)||{}).value || '' );
       data['doencas']=$$('input[name="doencas"]:checked').map(el=>el.value);
       data['procInteresse']=$$('input[name="procInteresse"]:checked').map(el=>el.value);
-      data['faixaInvest']=(document.querySelector('input[name="faixaInvest"]:checked')||{}).value||'';
+
+      // faixa de investimento opcional -> default se vazio
+      const invest = (document.querySelector('input[name="faixaInvest"]:checked')||{}).value||'';
+      data['faixaInvest'] = invest || 'Quero avaliar com a Dra.';
+
       data['lgpd']=document.querySelector('input[name="lgpd"]').checked;
       return data;
     }
