@@ -346,7 +346,7 @@
   <!-- ======= SCRIPT ÚNICO ======= -->
   <script>
     // URL do Web App (Apps Script) e segredo
-    const EXEC_URL = 'https://script.google.com/macros/s/AKfycbwqQ7Z5HIyd5htdmTkSP45cJr-eBx7ysQV1t4GkQluTBN25yX3a3ewHckb_8gUQ1k93/exec';
+    const EXEC_URL = 'https://script.google.com/macros/s/AKfycbzJtn8X24JMNPgess3BhdU-8icXFc165uxt8kUOQJUfMqGF4jc3bouzIN-RGLWykk6d/exec';
     const SECRET   = 'nm_2025_24jun86_bynv';
 
     const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -370,14 +370,14 @@
         const wrap  = document.querySelector(d.wrap);
         const input = document.querySelector(d.input);
         if (!wrap || !input) return;
-        if (d.hideWhenNo) { wrap.classList.toggle('hidden', !on); } // Histórico estético (oculta quando "Não")
+        if (d.hideWhenNo) { wrap.classList.toggle('hidden', !on); } // Histórico estético
         input.disabled = !on; wrap.classList.toggle('off', !on);
         const lbl=wrap.querySelector('label'); if (lbl) lbl.classList.toggle('required', on);
         if (!on) input.value='';
       });
     }
 
-    // “Outro” em Objetivos → mostra/esconde campo aberto
+    // “Outro” em Objetivos
     function toggleObjetivoOutro(){
       const outro = document.getElementById('objetivoOutroChk');
       const wrap  = document.getElementById('wrap-objetivo-outro');
@@ -412,7 +412,7 @@
       }
     })();
 
-    // Normaliza DOB para ISO antes de enviar (dd/mm/aaaa -> aaaa-mm-dd)
+    // Normaliza DOB para ISO (dd/mm/aaaa -> aaaa-mm-dd)
     function normalizeDOB(dobStr){
       if (/^\d{2}\/\d{2}\/\d{4}$/.test(dobStr)) {
         const [dd,mm,yyyy] = dobStr.split('/');
@@ -421,7 +421,7 @@
       return dobStr;
     }
 
-    // Imagens → DataURL com limites (leve e otimizado)
+    // Imagens → DataURL leve
     function fileToDataURL(file,maxW=1200,maxH=1600,quality=0.82){
       return new Promise(res=>{
         const fr=new FileReader();
@@ -502,16 +502,13 @@
       return data;
     }
 
-    // Feedback acessível + controle do botão
+    // Feedback + submit
     const form=document.getElementById('form');
     const feedback=document.getElementById('feedback');
     const submitBtn=document.querySelector('button[type="submit"]');
 
     function showMsg(msg){ feedback.classList.remove('hidden'); feedback.textContent=msg; feedback.scrollIntoView({behavior:'smooth'}); }
-
-    function withTimeout(promise, ms=12000){
-      return Promise.race([promise, new Promise((_,rej)=>setTimeout(()=>rej(new Error('Tempo esgotado')), ms))]);
-    }
+    function withTimeout(promise, ms=12000){ return Promise.race([promise, new Promise((_,rej)=>setTimeout(()=>rej(new Error('Tempo esgotado')), ms))]); }
 
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
