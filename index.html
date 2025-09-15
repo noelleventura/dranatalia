@@ -316,7 +316,48 @@
     // >>> ajuste aqui se o Apps Script mudar <<<
     const EXEC_URL = 'https://script.google.com/macros/s/AKfycbwqQ7Z5HIyd5htdmTkSP45cJr-eBx7ysQV1t4GkQluTBN25yX3a3ewHckb_8gUQ1k93/exec';
     const SECRET   = 'nm_2025_24jun86_bynv';
+    <script>
+  // Força digitação no mobile mantendo date-picker no desktop
+  (function enableMobileDOBInput(){
+    const dob = document.getElementById('nascimento');
+    if (!dob) return;
 
+    const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // Troca para texto + teclado numérico
+      dob.setAttribute('type','text');
+      dob.setAttribute('inputmode','numeric');
+      dob.setAttribute('autocomplete','bday');
+      dob.setAttribute('placeholder','dd/mm/aaaa');
+      dob.setAttribute('maxlength','10');
+
+      // Máscara e saneamento
+      dob.addEventListener('input', (e)=>{
+        let v = e.target.value.replace(/\D/g,'').slice(0,8); // só dígitos
+        if (v.length >= 5)       v = v.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3');
+        else if (v.length >= 3)  v = v.replace(/(\d{2})(\d{1,2})/, '$1/$2');
+        e.target.value = v;
+      });
+
+      // Validação simples ao sair do campo
+      dob.addEventListener('blur', (e)=>{
+        const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(e.target.value);
+        if (!m) return;
+        const [_, dd, mm, yyyy] = m.map(Number);
+        const valid =
+          mm >= 1 && mm <= 12 &&
+          dd >= 1 && dd <= 31 &&
+          yyyy >= 1900 && yyyy <= new Date().getFullYear();
+        if (!valid) {
+          e.target.setCustomValidity('Use o formato dd/mm/aaaa');
+        } else {
+          e.target.setCustomValidity('');
+        }
+      });
+    }
+  })();
+</script>
     const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
     const getRadio=(name)=>(document.querySelector(`input[name="${name}"]:checked`)||{}).value||'';
 
