@@ -16,25 +16,42 @@
   body{margin:0;color:var(--txt);font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--creme)}
   img{max-width:100%;height:auto;display:block}
 
-  /* ===== HERO (imagem inteira, responsiva, altura 60vh) ===== */
-  .hero{background:#FCF5EB;margin:0 0 16px}
+  /* ===== HERO — Art direction + overlay suave + cartão legível ===== */
+  .hero{position:relative;margin:0 0 20px;background:var(--creme)}
   .hero-inner{max-width:1200px;margin:0 auto;padding:0 16px}
   .hero-media{
-    width:100%; height:60vh; display:grid; place-items:center;
-    background:#FCF5EB; border-radius:16px; overflow:hidden; box-shadow:var(--shadow)
+    position:relative;width:100%;height:clamp(240px,56vh,600px);
+    border-radius:18px;overflow:hidden;box-shadow:var(--shadow)
   }
-  .hero-media img{width:100%;height:100%;object-fit:contain;object-position:center}
-  .hero-caption{
-    max-width:1000px; margin:12px auto 0; padding:clamp(14px,2.4vw,18px);
-    background:rgba(252,245,235,0.92); border:1px solid var(--border); border-radius:16px; text-align:center
+  /* desktop/tablet landscape = cover (impacto); mobile = contain (mostrar tudo) */
+  .hero-media img{width:100%;height:100%;object-position:center}
+  @media (min-width:780px){ .hero-media img{object-fit:cover} }
+  @media (max-width:779px){ .hero-media img{object-fit:contain;background:#FCF5EB} }
+  /* overlay gradiente para legibilidade */
+  .hero-media::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(
+      to bottom,
+      rgba(252,245,235,0.10) 0%,
+      rgba(252,245,235,0.25) 35%,
+      rgba(252,245,235,0.55) 65%,
+      rgba(252,245,235,0.85) 100%
+    )
   }
-  .hero-caption .brand{display:flex;align-items:center;flex-direction:column;gap:10px}
-  .hero-caption .brand img{width:clamp(140px,26vw,260px)}
-  .hero-caption h1{
+  /* cartão “glass/creme” */
+  .hero-copy{
+    position:relative;margin:-28px auto 0;max-width:940px;
+    background:rgba(252,245,235,0.95);border:1px solid var(--border);border-radius:16px;
+    padding:clamp(14px,2.2vw,18px);text-align:center;backdrop-filter:saturate(120%) blur(2px);
+    box-shadow:0 10px 26px rgba(0,0,0,.06)
+  }
+  .hero-copy .brand{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .hero-copy .brand img{width:clamp(138px,24vw,240px)}
+  .hero-copy h1{
     font-family:"Playfair Display",serif;font-weight:600;
-    font-size:clamp(18px,2.2vw,26px);line-height:1.15;letter-spacing:.2px;color:#B65F56;margin:2px 0 0
+    font-size:clamp(18px,2.1vw,26px);line-height:1.15;letter-spacing:.2px;color:var(--rose-prim);margin:2px 0 0
   }
-  .hero-caption p{margin:6px 0 0;color:#7a5e59;font-size:clamp(13px,2vw,15px)}
+  .hero-copy p{margin:6px 0 0;color:#7a5e59;font-size:clamp(13px,1.9vw,15px)}
 
   /* ===== LAYOUT / FORM ===== */
   main{max-width:var(--maxw);margin:18px auto 50px;padding:0 16px}
@@ -86,17 +103,21 @@
 </head>
 <body>
 
-<!-- ===== HEADER (BANNER 60vh, IMAGEM INTEIRA) ===== -->
+<!-- ===== HEADER (ART DIRECTION) ===== -->
 <header class="hero" role="banner" aria-label="Apresentação">
   <div class="hero-inner">
     <div class="hero-media" aria-hidden="true">
-      <img
-        src="https://dranatmagalhaes.com.br/wp-content/uploads/2025/01/BANNER-INICIAL-2.webp"
-        alt="Banner institucional da Dra. Natália Magalhães"
-        loading="eager" decoding="async">
+      <picture>
+        <!-- Se tiver versão mobile do banner, descomente e ajuste: -->
+        <!-- <source srcset="https://seu-dominio.com/banner-mobile.webp" media="(max-width: 779px)"> -->
+        <img
+          src="https://dranatmagalhaes.com.br/wp-content/uploads/2025/01/BANNER-INICIAL-2.webp"
+          alt="Banner institucional da Dra. Natália Magalhães"
+          loading="eager" decoding="async">
+      </picture>
     </div>
 
-    <div class="hero-caption">
+    <div class="hero-copy">
       <div class="brand">
         <img src="https://dranatmagalhaes.com.br/wp-content/uploads/2024/11/logo-dra-natalia.png"
              alt="Logo Dra. Natália Magalhães">
