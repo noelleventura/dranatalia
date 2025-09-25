@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Anamnese Online | Dra. Natália Magalhães</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-
   <style>
     :root{
       --rose-prim:#B65F56; --rose-apoio:#E6A3A3; --creme:#FCF5EB; --border:#e6e0d7;
@@ -16,107 +15,117 @@
     body{margin:0;font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--txt);background:var(--creme)}
     img{max-width:100%;height:auto;display:block}
 
-    /* ===== HERO (logo à esquerda + foto à direita) ===== */
-    .hero{border-bottom:1px solid var(--border);background:var(--creme)}
-    .hero-wrap{max-width:var(--maxw);margin:0 auto;padding:22px 16px}
-    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center}
-    @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:16px}}
-
-    /* Coluna esquerda (logo + copy) */
-    .brand{
-      background:rgba(252,245,235,.82); border:1px solid var(--border); border-radius:16px;
-      padding:clamp(18px,3.4vw,28px); backdrop-filter:blur(5px) saturate(120%); box-shadow:var(--shadow)
+    /* ===== HERO SOBREPOSTO (como o seu mock) ===== */
+    header.hero{
+      position:relative; min-height:80vh; display:flex; align-items:center;
+      color:var(--txt); isolation:isolate; border-bottom:1px solid var(--border);
     }
-    .brand-logo{width:clamp(170px,28vw,260px);margin-bottom:10px}
-    .brand h1{
-      margin:4px 0 6px; font-family:"Playfair Display",serif; font-weight:600;
+    /* fundo com a foto */
+    .hero-bg{position:absolute; inset:0; z-index:0; overflow:hidden}
+    .hero-bg img{
+      width:100%; height:100%; object-fit:cover; object-position:center;
+      opacity:.86; filter:saturate(104%); transform:translateZ(0);
+    }
+    /* véu sutil para contraste elegante */
+    .hero-bg::after{
+      content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:
+        linear-gradient(to right, rgba(252,245,235,.88) 0%, rgba(252,245,235,.22) 42%, rgba(252,245,235,0) 70%),
+        linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.05) 100%);
+    }
+    /* bloco “glass” com logo + copy sobrepostos */
+    .hero-overlay{
+      position:relative; z-index:2; max-width:min(680px, 92vw);
+      margin-left:clamp(16px,6vw,72px);
+      background:rgba(252,245,235,.78);
+      border:1px solid var(--border); border-radius:var(--radius);
+      padding: clamp(18px,3.6vw,32px);
+      backdrop-filter: blur(6px) saturate(120%);
+      box-shadow: var(--shadow);
+    }
+    .brand-logo{width:clamp(160px,28vw,260px); margin-bottom:12px}
+    .hero h1{
+      font-family:"Playfair Display",serif; font-weight:600; margin:0 0 8px;
       color:var(--rose-prim); font-size:clamp(22px,2.6vw,34px); line-height:1.12;
     }
-    .tagline{margin:0 0 8px; color:#826963; font-size:clamp(12px,1.8vw,13.5px); letter-spacing:.3px}
-    .lead{margin:8px 0; color:var(--muted); font-size:clamp(13px,2vw,16px); line-height:1.5}
-
-    /* CTA “ancora” para a próxima seção (form entrará na Parte 2) */
+    .tagline{margin:0 0 10px; color:#826963; font-size:clamp(12px,1.8vw,13.5px); letter-spacing:.3px}
+    .lead{margin:10px 0 16px; color:var(--muted); font-size:clamp(13.5px,2vw,16px); line-height:1.55}
     .btn-cta{
-      --h:56px; display:inline-flex; align-items:center; justify-content:center;
+      --h:52px; display:inline-flex; align-items:center; justify-content:center; gap:10px;
       min-height:var(--h); padding:0 26px; border:0; border-radius:999px; cursor:pointer;
-      font-weight:800; font-size:16px; color:#fff;
-      background:linear-gradient(135deg,#B65F56 0%,#E6A3A3 100%); box-shadow:0 12px 28px rgba(182,95,86,.25);
-      text-decoration:none
+      font-weight:800; font-size:16px; color:#fff; text-decoration:none;
+      background:linear-gradient(135deg,#B65F56 0%,#E6A3A3 100%); box-shadow:0 12px 28px rgba(182,95,86,.25)
+    }
+    @media (max-width:880px){
+      header.hero{min-height:68vh}
+      .hero-overlay{margin: clamp(12px,4vw,24px)}
+      .hero-bg::after{
+        background:
+          linear-gradient(to bottom, rgba(252,245,235,.82) 0%, rgba(252,245,235,.18) 48%, rgba(252,245,235,0) 78%),
+          linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.04) 100%);
+      }
     }
 
-    /* Coluna direita (foto com moldura suave) */
-    .hero-photo{
-      background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);
-      position:relative
-    }
-    .hero-photo::after{
-      content:""; position:absolute; inset:0; pointer-events:none;
-      background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.03) 100%);
-    }
-    .hero-photo img{
-      width:100%; height:100%; object-fit:contain; object-position:60% center; /* mostra a foto inteira */
-      background:var(--creme); opacity:.96; aspect-ratio:4/3;
-    }
-
-    /* Seção de introdução (fica abaixo do header) */
-    .intro{max-width:860px;margin:18px auto 34px;padding:0 16px; color:var(--muted)}
+    /* ===== CONTEÚDO ABAIXO DO HERO ===== */
+    main{max-width:var(--maxw);margin:28px auto;padding:0 16px}
+    .intro{max-width:860px;margin:0 auto 26px;color:var(--muted)}
     .intro p{margin:10px 0; font-size:clamp(14px,2.1vw,16px); line-height:1.6}
     .intro strong{color:#5d3c38}
 
-    footer{text-align:center;margin:36px 0 46px;color:#7a5e59;font-size:12px}
-    footer .dev{background:linear-gradient(135deg,#B65F56 0%,#E6A3A3 100%);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+    footer{text-align:center;margin:42px 0 56px;color:#7a5e59;font-size:12px;line-height:1.6}
+    footer .dev{
+      background:linear-gradient(135deg,#B65F56 0%,#E6A3A3 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent
+    }
   </style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
+  <!-- ===== HEADER SOBREPOSTO ===== -->
   <header class="hero" role="banner" aria-label="Apresentação">
-    <div class="hero-wrap">
-      <div class="hero-grid">
-        <!-- Esquerda: logo + copy -->
-        <div class="brand">
-          <img class="brand-logo" src="https://dranatmagalhaes.com.br/wp-content/uploads/2024/11/logo-dra-natalia.png" alt="Logo Dra. Natália Magalhães">
-          <h1>Avaliação Inicial — o cuidado com você começa aqui</h1>
-          <p class="tagline">Harmonização orofacial • Estética regenerativa</p>
+    <div class="hero-bg" aria-hidden="true">
+      <img src="https://dranatmagalhaes.com.br/wp-content/uploads/2025/01/BANNER-INICIAL-2.webp" alt="">
+    </div>
 
-          <!-- Copy com Neurobranding/Neurovendas -->
-          <p class="lead">
-            Este é o seu primeiro passo para resultados naturais e duradouros.  
-            Suas respostas ativam nosso processo de <strong>planejamento personalizado</strong> — combinando ciência, estética e sensibilidade — para valorizar o que já é seu.
-          </p>
-          <p class="lead">
-            Com poucos minutos, você nos ajuda a entender seu histórico, <strong>o que te incomoda</strong> e qual objetivo deseja alcançar.  
-            Assim, chegamos à consulta com um olhar clínico mais preciso e uma proposta pensada para você.
-          </p>
-
-          <a href="#anamnese" class="btn-cta">Começar minha anamnese</a>
-        </div>
-
-        <!-- Direita: foto -->
-        <div class="hero-photo" aria-hidden="true">
-          <img src="https://dranatmagalhaes.com.br/wp-content/uploads/2025/01/BANNER-INICIAL-2.webp" alt="">
-        </div>
-      </div>
+    <div class="hero-overlay">
+      <img class="brand-logo" src="https://dranatmagalhaes.com.br/wp-content/uploads/2024/11/logo-dra-natalia.png" alt="Logo Dra. Natália Magalhães">
+      <h1>Avaliação Inicial — o cuidado com você começa aqui</h1>
+      <p class="tagline">Harmonização orofacial • Estética regenerativa</p>
+      <p class="lead">
+        Este é o seu primeiro passo para resultados naturais e duradouros.
+        Suas respostas ativam nosso <strong>planejamento personalizado</strong> — unindo ciência, estética e sensibilidade —
+        para valorizar o que já é seu.
+      </p>
+      <p class="lead">
+        Com poucos minutos, você nos ajuda a entender seu histórico, <strong>o que te incomoda</strong> e o objetivo que deseja alcançar.
+        Assim, chegamos à consulta com um olhar clínico mais preciso e uma proposta pensada para você.
+      </p>
+      <a href="#anamnese" class="btn-cta">Começar minha anamnese</a>
     </div>
   </header>
 
-  <!-- Introdução curta (reforça confiança e reduz atrito antes do form) -->
-  <section class="intro">
-    <p>
-      <strong>Como funciona:</strong> responda com sinceridade e no seu tempo.  
-      Seus dados são tratados conforme a LGPD. Na próxima etapa, você verá perguntas simples sobre dados pessoais, saúde, queixas e interesses.
-    </p>
-    <p>
-      <strong>Benefícios para você:</strong> atendimento mais assertivo, plano seguro e indicações realmente relevantes — sem tentativas aleatórias.  
-      Cuidar bem começa por ouvir bem.
-    </p>
-  </section>
+  <!-- ===== BLOCO INICIAL ABAIXO DO HERO ===== -->
+  <main>
+    <section class="intro">
+      <p>
+        <strong>Como funciona:</strong> responda com sinceridade e no seu tempo.
+        Seus dados são tratados conforme a LGPD. Na próxima etapa, você verá perguntas simples
+        sobre dados pessoais, saúde, queixas e interesses.
+      </p>
+      <p>
+        <strong>Benefícios para você:</strong> atendimento mais assertivo, plano seguro e indicações realmente relevantes — sem tentativas aleatórias.
+        Cuidar bem começa por ouvir bem.
+      </p>
+    </section>
 
-  <!-- Âncora onde o formulário será inserido na Parte 2 -->
-  <div id="anamnese"></div>
+    <!-- Âncora do formulário — Parte 2 virá aqui -->
+    <div id="anamnese"></div>
+  </main>
 
-  <footer>© 2025 Dra. Natália Magalhães — Todos os direitos reservados. <span class="dev">Desenvolvido por Noelle Ventura</span></footer>
+  <footer>
+    © 2025 Dra. Natália Magalhães — Todos os direitos reservados. <br/>
+    <span class="dev">Desenvolvido por Noelle Ventura</span>
+  </footer>
 
 </body>
 </html>
